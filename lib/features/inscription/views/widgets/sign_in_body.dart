@@ -52,15 +52,6 @@ class _SignInBodyState extends State<SignInBody> {
             ]),
           ),
         ),
-        Form(
-            child: Column(
-          children: [
-            TextFormField(
-              controller: _emailController,
-              decoration: inputDecoration(),
-            )
-          ],
-        ))
       ],
     );
   }

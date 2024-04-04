@@ -11,7 +11,7 @@ class SignInBody extends StatefulWidget {
 }
 
 class _SignInBodyState extends State<SignInBody> {
-  final TextEditingController _emailController = TextEditingController();
+  final _emailController = TextEditingController();
 
   final _formKey = GlobalKey();
 
@@ -57,7 +57,11 @@ class _SignInBodyState extends State<SignInBody> {
           children: [
             TextFormField(
               controller: _emailController,
-              decoration: inputDecoration(),
+              decoration: inputDecoration(
+                  hinText: 'Email',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20))),
+              keyboardType: TextInputType.emailAddress,
             )
           ],
         ))

@@ -5,4 +5,8 @@ abstract class Styles {
   static final textStyle52 = GoogleFonts.inter(
     fontSize: 52,
   );
+  static final textStyle14 = GoogleFonts.inter(
+    fontSize: 14,
+    color: const Color(0xff000000),
+  );
 }

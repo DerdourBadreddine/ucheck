@@ -9,4 +9,19 @@ abstract class Styles {
     fontSize: 14,
     color: const Color(0xff000000),
   );
+  static final textStyle20 = GoogleFonts.inter(
+    fontSize: 20,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static final textStyle46 = GoogleFonts.inter(
+    fontSize: 46,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static final textStyle11 = GoogleFonts.inter(
+    fontSize: 11,
+    color: Colors.white,
+    fontWeight: FontWeight.w600,
+  );
 }

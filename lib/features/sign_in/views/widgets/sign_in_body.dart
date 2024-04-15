@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:ucheck/core/app_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ucheck/core/utils/app_router.dart';
+import 'package:ucheck/core/utils/assets.dart';
 import 'package:ucheck/core/utils/styles.dart';
+import 'package:ucheck/main.dart';
 
 class SignInBody extends StatefulWidget {
   const SignInBody({super.key});
@@ -15,7 +17,7 @@ class SignInBody extends StatefulWidget {
 class _SignInBodyState extends State<SignInBody> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class _SignInBodyState extends State<SignInBody> {
             height: 500,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/bg.png"),
+                    image: AssetImage(AssetsData.imgBgSignIn),
                     fit: BoxFit.fill)),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
@@ -102,8 +104,18 @@ class _SignInBodyState extends State<SignInBody> {
                           borderRadius: BorderRadius.circular(47),
                         ),
                       ),
-                      onPressed: () {
-                        print('loged in');
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final AuthResponse res =
+                              await supabase.auth.signInWithPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                          // final Session? session = res.session;
+                          // final User? user = res.user;
+                        }
+                        GoRouter.of(context)
+                            .pushReplacement(AppRouter.kNavigationBar);
                       },
                       child: Text(
                         'Log in',
@@ -127,7 +139,7 @@ class _SignInBodyState extends State<SignInBody> {
                         ),
                         InkWell(
                           onTap: () {
-                            GoRouter.of(context).push(Routes.kRegistration);
+                            GoRouter.of(context).push(AppRouter.kRegistration);
                           },
                           child: Text(
                             'create an account',
@@ -137,7 +149,7 @@ class _SignInBodyState extends State<SignInBody> {
                         )
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -151,6 +163,12 @@ class _SignInBodyState extends State<SignInBody> {
       String hintText, TextInputType inputType, bool obscureText) {
     return TextFormField(
       controller: controller,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'please fill this field';
+        }
+        return null;
+      },
       obscureText: obscureText,
       cursorColor: Colors.grey,
       decoration: InputDecoration(

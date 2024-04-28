@@ -106,8 +106,7 @@ class _SignInBodyState extends State<SignInBody> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          final AuthResponse res =
-                              await supabase.auth.signInWithPassword(
+                          await supabase.auth.signInWithPassword(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );

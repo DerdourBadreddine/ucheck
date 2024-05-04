@@ -256,7 +256,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                           if (_formKey.currentState!.validate() &&
                               _passwordController.text ==
                                   _confirmPasswordController.text) {
-                            final AuthResponse res = await supabase.auth.signUp(
+                            await supabase.auth.signUp(
                               email: widget.email,
                               password: _passwordController.text,
                             );
@@ -266,6 +266,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                             await supabase.from('users').insert({
                               'name': widget.name,
                               'last_name': widget.lastName,
+                              'email': widget.email,
                               'id_number': _idNumberController.text,
                               'user_role': _selectedRole
                             });

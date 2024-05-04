@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:ucheck/core/utils/assets.dart';
 import 'package:ucheck/core/utils/styles.dart';
 import 'package:ucheck/main.dart';
 
@@ -62,19 +63,25 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Row(
                       children: [
-                        CircleAvatar(),
-                        SizedBox(
+                        const SizedBox(
+                          width: 38,
+                          height: 39,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage(AssetsData.imgAvatar),
+                          ),
+                        ),
+                        const SizedBox(
                           width: 8,
                         ),
                         Text(
-                          'Evaa Doe',
-                          style: TextStyle(color: Colors.white),
+                          '$lastName $name ',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
@@ -134,10 +141,11 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                   child: Text('Announcement',
                       style: Styles.textStyle20.copyWith(
-                          color: Color(0xff242424),
+                          color: const Color(0xff242424),
                           fontWeight: FontWeight.bold)),
                 ),
                 LimitedBox(

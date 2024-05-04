@@ -9,6 +9,21 @@ abstract class Styles {
     fontSize: 14,
     color: const Color(0xff000000),
   );
+  static final textStyle13 = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: const Color(0xff212121),
+  );
+  static final textStyle16 = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: const Color(0xff212121),
+  );
+  static final textStyle24 = GoogleFonts.inter(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: const Color(0xff212121),
+  );
   static final textStyle20 = GoogleFonts.inter(
     fontSize: 20,
     color: Colors.white,

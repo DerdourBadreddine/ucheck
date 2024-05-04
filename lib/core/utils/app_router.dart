@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:ucheck/features/admin/navigation_bar_admin/views/navigation_bar_view.dart';
 import 'package:ucheck/features/home/views/home_view.dart';
 import 'package:ucheck/features/navigation_bar/views/navigation_bar_view.dart';
 import 'package:ucheck/features/sign_in/views/sign_in.dart';
@@ -6,10 +7,12 @@ import 'package:ucheck/features/sign_up/views/sign_up_view.dart';
 import 'package:ucheck/features/sign_up/views/widgets/sign_up_view_body_last_step.dart';
 
 abstract class AppRouter {
+  static const kDefault = '/';
   static const kSignIn = '/signIn';
   static const kRegistration = '/signUp';
   static const kRegistrationLastStep = '/signUpLastStep';
   static const kNavigationBar = '/NavigationBar';
+  static const kNavigationBarAdmin = '/NavigationBarAdmin';
   static final router = GoRouter(routes: [
     GoRoute(
       path: '/',
@@ -31,6 +34,10 @@ abstract class AppRouter {
     GoRoute(
       path: kNavigationBar,
       builder: (context, state) => const NavigationBarView(),
+    ),
+    GoRoute(
+      path: kNavigationBarAdmin,
+      builder: (context, state) => const NavigationBarAdminView(),
     ),
   ]);
 }

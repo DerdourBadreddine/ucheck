@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ucheck/core/utils/app_router.dart';
+import 'package:ucheck/features/admin/navigation_bar_admin/view_model/cubit/navigation_admin_cubit.dart';
 import 'package:ucheck/features/navigation_bar/view_model/cubit/navigation_cubit.dart';
 
 Future<void> main() async {
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => NavigationCubit(),
         ),
+        BlocProvider(
+          create: (context) => NavigationAdminCubit(),
+        )
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

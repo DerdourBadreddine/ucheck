@@ -19,6 +19,16 @@ class _SignInBodyState extends State<SignInBody> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  Future<Map<String, dynamic>> fetchUserData() async {
+    final userData = await supabase
+        .from('users')
+        .select('user_role')
+        .eq('id', supabase.auth.currentUser!.id)
+        .single();
+
+    return userData;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -110,11 +120,19 @@ class _SignInBodyState extends State<SignInBody> {
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-                          // final Session? session = res.session;
-                          // final User? user = res.user;
+                          final userData = await fetchUserData();
+                          if (userData['user_role'] == 'student') {
+                            if (!context.mounted) return;
+                            GoRouter.of(context)
+                                .pushReplacement(AppRouter.kNavigationBar);
+                          } else if (userData['user_role'] == 'teacher') {
+                            if (!context.mounted) return;
+                            GoRouter.of(context)
+                                .pushReplacement(AppRouter.kNavigationBarAdmin);
+                          } else {
+                            return;
+                          }
                         }
-                        GoRouter.of(context)
-                            .pushReplacement(AppRouter.kNavigationBar);
                       },
                       child: Text(
                         'Log in',

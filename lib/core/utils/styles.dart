@@ -10,13 +10,18 @@ abstract class Styles {
     color: const Color(0xff000000),
   );
   static final textStyle13 = GoogleFonts.inter(
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: FontWeight.w500,
     color: const Color(0xff212121),
   );
   static final textStyle16 = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.bold,
+    color: const Color(0xff212121),
+  );
+  static final textStyle17 = GoogleFonts.inter(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
     color: const Color(0xff212121),
   );
   static final textStyle24 = GoogleFonts.inter(
@@ -38,5 +43,10 @@ abstract class Styles {
     fontSize: 11,
     color: Colors.white,
     fontWeight: FontWeight.w600,
+  );
+  static final textStyle12 = GoogleFonts.inter(
+    fontSize: 12,
+    color: Colors.white,
+    fontWeight: FontWeight.w400,
   );
 }

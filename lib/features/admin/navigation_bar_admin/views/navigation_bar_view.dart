@@ -46,6 +46,8 @@ class NavigationBarAdminView extends StatelessWidget {
                     case 2:
                       navigationCubit.updateIndex(index);
                       break;
+                    case 3:
+                      navigationCubit.updateIndex(index);
                     default:
                   }
                 },
@@ -60,6 +62,7 @@ class NavigationBarAdminView extends StatelessWidget {
                   myCustomNavigationBarItem(
                       AssetsData.iconCalendar, 'Calendar'),
                   myCustomNavigationBarItem(AssetsData.iconHome, 'Home'),
+                  myCustomNavigationBarItem(AssetsData.iconList, 'List'),
                   myCustomNavigationBarItem(AssetsData.iconProfile, 'Profile'),
                 ],
               ),

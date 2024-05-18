@@ -62,8 +62,8 @@ class NavigationBarAdminView extends StatelessWidget {
                   myCustomNavigationBarItem(
                       AssetsData.iconCalendar, 'Calendar'),
                   myCustomNavigationBarItem(AssetsData.iconHome, 'Home'),
-                  myCustomNavigationBarItem(AssetsData.iconProfile, 'Profile'),
                   myCustomNavigationBarItem(AssetsData.iconList, 'List'),
+                  myCustomNavigationBarItem(AssetsData.iconProfile, 'Profile'),
                 ],
               ),
             ),

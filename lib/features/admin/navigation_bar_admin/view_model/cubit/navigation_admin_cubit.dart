@@ -11,8 +11,8 @@ class NavigationAdminCubit extends Cubit<NavigationAdminState> {
       : super(NavigationAdminInitial(0, const [
           MyCalendarAdminView(),
           HomeAdminView(),
-          ProfileView(),
           StudentListView(),
+          ProfileView(),
         ]));
   void updateIndex(int index) {
     emit(

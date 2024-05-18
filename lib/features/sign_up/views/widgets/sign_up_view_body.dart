@@ -179,7 +179,7 @@ class _SignUpViewbodyState extends State<SignUpViewbody> {
                           final String name = _nameController.text;
                           final String lastName = _lastNameController.text;
                           final String email = _emailController.text;
-                          GoRouter.of(context).goNamed(
+                          GoRouter.of(context).pushNamed(
                               AppRouter.kRegistrationLastStep,
                               pathParameters: {
                                 'name': name,
@@ -225,6 +225,9 @@ class _SignUpViewbodyState extends State<SignUpViewbody> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 50,
+          )
         ],
       ),
     );

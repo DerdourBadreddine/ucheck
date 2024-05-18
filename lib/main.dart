@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
               fillColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.selected)) {
-                  return Color(0xff5174DB);
+                  return const Color(0xff5174DB);
                 }
-                return Color(0xffE5E3EE);
+                return const Color(0xffE5E3EE);
               }),
             )),
         routerConfig: AppRouter.router,

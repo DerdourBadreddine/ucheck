@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ucheck/core/utils/app_router.dart';
 import 'package:ucheck/core/utils/assets.dart';
 import 'package:ucheck/core/utils/styles.dart';
@@ -14,7 +16,7 @@ class ProfileViewBody extends StatefulWidget {
 
 class _ProfileViewBodyState extends State<ProfileViewBody> {
   bool islogedOut = false;
-
+  String? profileImageUrl;
   Future<Map<String, dynamic>> fetchUserData() async {
     final session = supabase.auth.currentSession;
 
@@ -26,10 +28,33 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     return response;
   }
 
+  Future<void> pickAndUploadImage() async {
+    final XFile? profileImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    if (profileImage == null) return;
+    final imageBytes = await profileImage.readAsBytes();
+    final userId = supabase.auth.currentUser!.id;
+    await supabase.storage.from('profiles').uploadBinary(
+          '/$userId/profile',
+          imageBytes,
+          fileOptions: FileOptions(
+              cacheControl: '3600',
+              upsert: true,
+              contentType:
+                  'image/${profileImage.path.split('.').last.toLowerCase()}'),
+        );
+    final imageUrl =
+        supabase.storage.from('profiles').getPublicUrl('/$userId/profile');
+    await supabase
+        .from('users')
+        .update({'profile_url': imageUrl}).eq('id', userId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return islogedOut
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : FutureBuilder(
             future: fetchUserData(),
             builder: (context, snapshot) {
@@ -39,6 +64,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                 return Center(child: Text('error:  ${snapshot.error}'));
               } else {
                 final userData = snapshot.data as Map<String, dynamic>;
+                final profileUrl = userData['profile_url'];
                 return Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height -
@@ -64,13 +90,21 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                   const Color(0xff3126B4).withOpacity(0.88),
                                   const Color(0xff008BF2).withOpacity(0.79),
                                 ])),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
                           child: CircleAvatar(
-                            backgroundImage: AssetImage(AssetsData.imgAvatar),
+                            backgroundImage: profileUrl == null
+                                ? const AssetImage(AssetsData.imgAvatar)
+                                    as ImageProvider
+                                : NetworkImage(profileUrl),
                           ),
                         ),
                       ),
+                      InkWell(
+                          onTap: () {
+                            pickAndUploadImage();
+                          },
+                          child: const Icon(Icons.add_a_photo)),
                       const SizedBox(
                         height: 20,
                       ),
@@ -81,14 +115,18 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                             style: Styles.textStyle24,
                           ),
                           Text(
-                            '3rd Year info si',
+                            userData['user_role'] == 'student'
+                                ? '${userData['user_categorie']}'
+                                : '${userData['user_categorie']} teacher',
                             style: Styles.textStyle13,
                           ),
                           const SizedBox(
                             height: 30,
                           ),
                           Text(
-                            'Student Id',
+                            userData['user_role'] == 'student'
+                                ? 'Student id'
+                                : 'Teacher id',
                             style: Styles.textStyle13,
                           ),
                           Text(

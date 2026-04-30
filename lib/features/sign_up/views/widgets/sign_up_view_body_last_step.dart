@@ -12,11 +12,11 @@ class SignUpViewBodyLastStep extends StatefulWidget {
   final String? lastName;
   final String? email;
   const SignUpViewBodyLastStep({
-    Key? key,
+    super.key,
     this.name,
     this.lastName,
     this.email,
-  }) : super(key: key);
+  });
 
   @override
   State<SignUpViewBodyLastStep> createState() => _SignUpViewBodyLastStepState();
@@ -108,7 +108,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               boxShadow: [
                                 BoxShadow(
                                   color:
-                                      const Color(0xff01B836).withOpacity(0.3),
+                                      Color(0xff01B836).withValues(alpha: 0.3),
                                   spreadRadius: 3,
                                   blurRadius: 7,
                                   offset: const Offset(0, 0),
@@ -161,8 +161,8 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                 color: const Color(0xff1145FF),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xff1145FF)
-                                        .withOpacity(0.3),
+                                    color: Color(0xff1145FF)
+                                        .withValues(alpha: 0.3),
                                     spreadRadius: 3,
                                     blurRadius: 7,
                                     offset: const Offset(0, 0),
@@ -350,7 +350,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               boxShadow: [
                                 BoxShadow(
                                   color:
-                                      const Color(0xff1145FF).withOpacity(0.3),
+                                      Color(0xff1145FF).withValues(alpha: 0.3),
                                   spreadRadius: 5,
                                   blurRadius: 7,
                                 )
@@ -439,7 +439,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
               Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),

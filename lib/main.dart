@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
             textTheme: GoogleFonts.interTextTheme(),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             radioTheme: ThemeData.light().radioTheme.copyWith(
-              fillColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.selected)) {
+              fillColor: WidgetStateProperty.resolveWith<Color>(
+                  (Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
                   return const Color(0xff5174DB);
                 }
                 return const Color(0xffE5E3EE);

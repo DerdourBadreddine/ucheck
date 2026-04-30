@@ -6,7 +6,7 @@ import 'package:ucheck/core/utils/styles.dart';
 import 'package:ucheck/main.dart';
 
 class HomeViewBody extends StatefulWidget {
-  const HomeViewBody({Key? key}) : super(key: key);
+  const HomeViewBody({super.key});
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -60,7 +60,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         end: Alignment.bottomCenter,
                         colors: [
                           const Color(0xff3126B4),
-                          const Color(0xff008BF2).withOpacity(0.6),
+                          Color(0xff008BF2).withValues(alpha: 0.6),
                         ],
                       ),
                     ),
@@ -117,8 +117,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                     borderRadius: BorderRadius.circular(47),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: const Color(0xff1145FF)
-                                            .withOpacity(0.3),
+                                        color: Color(0xff1145FF)
+                                            .withValues(alpha: 0.3),
                                         spreadRadius: 5,
                                         blurRadius: 7,
                                       )

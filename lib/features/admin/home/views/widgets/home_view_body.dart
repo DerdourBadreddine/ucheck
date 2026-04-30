@@ -6,7 +6,7 @@ import 'package:ucheck/core/utils/styles.dart';
 import 'package:ucheck/main.dart';
 
 class HomeAdminViewBody extends StatefulWidget {
-  const HomeAdminViewBody({Key? key}) : super(key: key);
+  const HomeAdminViewBody({super.key});
 
   @override
   State<HomeAdminViewBody> createState() => _HomeViewBodyState();
@@ -70,7 +70,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                           end: Alignment.bottomCenter,
                           colors: [
                             const Color(0xff3126B4),
-                            const Color(0xff008BF2).withOpacity(0.6),
+                            Color(0xff008BF2).withValues(alpha: 0.6),
                           ],
                         ),
                       ),
@@ -441,7 +441,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: const Color(0xff4DADF5).withOpacity(0.19),
+                    backgroundColor: Color(0xff4DADF5).withValues(alpha: 0.19),
                   ),
                   onPressed: () async {
                     if (_announcementController.text.isEmpty) return;
@@ -519,7 +519,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
       height: 280,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: Colors.white.withOpacity(0.6),
+        color: Colors.white.withValues(alpha: 0.6),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5.0),

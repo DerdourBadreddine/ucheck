@@ -48,7 +48,7 @@ class _SignUpViewbodyState extends State<SignUpViewbody> {
                         color: const Color(0xff1145FF),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1145FF).withOpacity(0.3),
+                            color: Color(0xff1145FF).withValues(alpha: 0.3),
                             spreadRadius: 3,
                             blurRadius: 7,
                             offset: const Offset(0, 0),
@@ -162,7 +162,7 @@ class _SignUpViewbodyState extends State<SignUpViewbody> {
                         borderRadius: BorderRadius.circular(47),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xff1145FF).withOpacity(0.3),
+                            color: Color(0xff1145FF).withValues(alpha: 0.3),
                             spreadRadius: 5,
                             blurRadius: 7,
                           )

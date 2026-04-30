@@ -87,8 +87,8 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  const Color(0xff3126B4).withOpacity(0.88),
-                                  const Color(0xff008BF2).withOpacity(0.79),
+                                  Color(0xff3126B4).withValues(alpha: 0.88),
+                                  Color(0xff008BF2).withValues(alpha: 0.79),
                                 ])),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -151,26 +151,6 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       ),
                       Column(
                         children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(179, 45),
-                              backgroundColor: Colors.white,
-                              elevation: 0,
-                              side: const BorderSide(color: Color(0xff5174DB)),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(58),
-                              ),
-                            ),
-                            child: Text(
-                              'Settings',
-                              style: Styles.textStyle20.copyWith(
-                                fontSize: 18,
-                                color: const Color(0xff5174DB),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
                           const SizedBox(
                             height: 20,
                           ),

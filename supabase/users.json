@@ -1,0 +1,79 @@
+[
+  {
+    "id": "0b87fed4-2707-45be-8c13-cd26d1012650",
+    "created_at": "2024-05-18 03:28:55.137822+00",
+    "name": "badrou",
+    "last_name": "badrou ",
+    "id_number": "3600",
+    "user_role": "student",
+    "email": "end@end.end",
+    "user_categorie": "L3 info si",
+    "profile_url": null
+  },
+  {
+    "id": "f934f44e-7c01-4891-9865-710573c3b2c8",
+    "created_at": "2024-05-23 20:01:40.053449+00",
+    "name": "karim",
+    "last_name": "derdour",
+    "id_number": "36003700",
+    "user_role": "teacher",
+    "email": "karim@gmail.com",
+    "user_categorie": "principal",
+    "profile_url": "https://hlepvedspymbjldkcomq.supabase.co/storage/v1/object/public/profiles//f934f44e-7c01-4891-9865-710573c3b2c8/profile"
+  },
+  {
+    "id": "8bfb70a6-1f3e-4316-a580-7c486a40c679",
+    "created_at": "2024-05-18 03:27:48.628984+00",
+    "name": "kjhf",
+    "last_name": "sdf",
+    "id_number": "36001672",
+    "user_role": "teacher",
+    "email": "end@end.co",
+    "user_categorie": "normal",
+    "profile_url": null
+  },
+  {
+    "id": "4bf92899-c5a6-45c5-b75e-166ca779e5f8",
+    "created_at": "2024-05-23 20:30:23.543183+00",
+    "name": "ali",
+    "last_name": "ali",
+    "id_number": "1231234",
+    "user_role": "teacher",
+    "email": "ali@gmail.com",
+    "user_categorie": "normal",
+    "profile_url": null
+  },
+  {
+    "id": "87c41a23-24ea-4a88-bbb8-fe3e7973b2ae",
+    "created_at": "2024-06-21 21:51:03.064285+00",
+    "name": "ali",
+    "last_name": "derdour",
+    "id_number": "24848390",
+    "user_role": "teacher",
+    "email": "ali.derdour@gmail.com",
+    "user_categorie": "principal",
+    "profile_url": "https://hlepvedspymbjldkcomq.supabase.co/storage/v1/object/public/profiles//87c41a23-24ea-4a88-bbb8-fe3e7973b2ae/profile"
+  },
+  {
+    "id": "01f0935a-60bc-4cb3-b240-3d3b987ce0b3",
+    "created_at": "2024-06-24 23:53:41.446574+00",
+    "name": "touiker",
+    "last_name": "mehdi",
+    "id_number": "3450340",
+    "user_role": "student",
+    "email": "touiker21@gmail.com",
+    "user_categorie": "L3 info si",
+    "profile_url": null
+  },
+  {
+    "id": "68769cb2-86a4-46e7-96fe-ce3efaba8b8e",
+    "created_at": "2024-06-25 10:12:48.505284+00",
+    "name": "mezian",
+    "last_name": "dahou",
+    "id_number": "36003623",
+    "user_role": "student",
+    "email": "dahou21@gmail.com",
+    "user_categorie": "L3 info isil",
+    "profile_url": null
+  }
+]

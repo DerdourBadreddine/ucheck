@@ -1,0 +1,67 @@
+[
+  {
+    "id": "18",
+    "created_at": "2024-05-18 03:30:39.835407+00",
+    "start_at": "09:30",
+    "end_at": "11:00",
+    "subject": "algo",
+    "color": "0xffF46D8D",
+    "date": "2024-05-18",
+    "faculty": "science ",
+    "department": "informatique ",
+    "principal_teacher": "slimane tich tich ",
+    "exam_level": "L3 info si"
+  },
+  {
+    "id": "20",
+    "created_at": "2024-05-23 20:14:12.230775+00",
+    "start_at": "09:00",
+    "end_at": "11:00",
+    "subject": "daw",
+    "color": "0xffADBDFF",
+    "date": "2024-05-24",
+    "faculty": "sscience",
+    "department": "info",
+    "principal_teacher": "karim",
+    "exam_level": "L3 info si"
+  },
+  {
+    "id": "21",
+    "created_at": "2024-05-23 20:15:11.45842+00",
+    "start_at": "08:00",
+    "end_at": "10:00",
+    "subject": "daw",
+    "color": "0xff472C83",
+    "date": "2024-05-23",
+    "faculty": "science",
+    "department": "info",
+    "principal_teacher": "karim",
+    "exam_level": "L3 info si"
+  },
+  {
+    "id": "22",
+    "created_at": "2024-06-21 22:01:44.808458+00",
+    "start_at": "08:00",
+    "end_at": "10:00",
+    "subject": "SI 2",
+    "color": "0xffADBDFF",
+    "date": "2024-06-22",
+    "faculty": "science",
+    "department": "informatique ",
+    "principal_teacher": "ali",
+    "exam_level": "M1 glaa"
+  },
+  {
+    "id": "23",
+    "created_at": "2024-06-25 12:12:43.887406+00",
+    "start_at": "08:00",
+    "end_at": "10:00",
+    "subject": "POO",
+    "color": "0xff2C53DD",
+    "date": "2024-06-26",
+    "faculty": "science",
+    "department": "informatics",
+    "principal_teacher": "derdour",
+    "exam_level": "L3 info si"
+  }
+]

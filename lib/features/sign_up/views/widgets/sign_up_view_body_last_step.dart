@@ -57,7 +57,6 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
         .select('user_role')
         .eq('id', supabase.auth.currentUser!.id)
         .single();
-
     return userData;
   }
 
@@ -90,9 +89,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28),
                   child: Row(
@@ -107,8 +104,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               color: const Color(0xff01B836),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      Color(0xff01B836).withValues(alpha: 0.3),
+                                  color: Color(0xff01B836).withValues(alpha: 0.3),
                                   spreadRadius: 3,
                                   blurRadius: 7,
                                   offset: const Offset(0, 0),
@@ -121,18 +117,11 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               color: Colors.white,
                             )),
                           ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            'Step 1',
-                            style: Styles.textStyle14,
-                          ),
+                          const SizedBox(height: 6),
+                          Text('Step 1', style: Styles.textStyle14),
                         ],
                       ),
-                      const SizedBox(
-                        width: 13,
-                      ),
+                      const SizedBox(width: 13),
                       Column(
                         children: [
                           Container(
@@ -143,14 +132,10 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               color: const Color(0xff01B836),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                         ],
                       ),
-                      const SizedBox(
-                        width: 13,
-                      ),
+                      const SizedBox(width: 13),
                       Column(
                         children: [
                           Container(
@@ -161,82 +146,50 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                 color: const Color(0xff1145FF),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0xff1145FF)
-                                        .withValues(alpha: 0.3),
+                                    color: Color(0xff1145FF).withValues(alpha: 0.3),
                                     spreadRadius: 3,
                                     blurRadius: 7,
                                     offset: const Offset(0, 0),
                                   ),
                                 ]),
                             child: Center(
-                                child: Text(
-                              '2',
-                              style: Styles.textStyle20,
-                            )),
+                                child: Text('2', style: Styles.textStyle20)),
                           ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            'Step 2',
-                            style: Styles.textStyle14,
-                          ),
+                          const SizedBox(height: 6),
+                          Text('Step 2', style: Styles.textStyle14),
                         ],
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Are you a :',
-                        style: Styles.textStyle14,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Radio(
-                            value: 'student',
-                            groupValue: _selectedRole,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _selectedRole = value;
-                              });
-                            },
-                          ),
-                          Text(
-                            'Student',
-                            style: Styles.textStyle14,
-                          ),
-                          Radio(
-                            value: 'teacher',
-                            groupValue: _selectedRole,
-                            onChanged: (String? value) {
-                              setState(
-                                () {
-                                  _selectedRole = value;
-                                },
-                              );
-                            },
-                          ),
-                          Text(
-                            'Teacher',
-                            style: Styles.textStyle14,
-                          ),
-                        ],
+                      Text('Are you a :', style: Styles.textStyle14),
+                      RadioGroup<String>(
+                        groupValue: _selectedRole,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _selectedRole = value;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Radio<String>(value: 'student'),
+                            Text('Student', style: Styles.textStyle14),
+                            const Radio<String>(value: 'teacher'),
+                            Text('Teacher', style: Styles.textStyle14),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Form(
                   key: _formKey,
                   child: Padding(
@@ -249,27 +202,21 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                           TextInputType.text,
                           false,
                         ),
-                        const SizedBox(
-                          height: 11,
-                        ),
+                        const SizedBox(height: 11),
                         myCustomTextFormField(
                           _passwordController,
                           'Password',
                           TextInputType.text,
                           true,
                         ),
-                        const SizedBox(
-                          height: 11,
-                        ),
+                        const SizedBox(height: 11),
                         myCustomTextFormField(
                           _confirmPasswordController,
                           'Confirm Password',
                           TextInputType.text,
                           true,
                         ),
-                        const SizedBox(
-                          height: 11,
-                        ),
+                        const SizedBox(height: 11),
                         _selectedRole == 'student'
                             ? PopupMenuButton(
                                 onSelected: (value) {
@@ -306,42 +253,24 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                         ))
                                     .toList(),
                               )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Radio(
-                                    value: 'normal',
-                                    groupValue: _selectedTeacherRole,
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        _selectedTeacherRole = value;
-                                      });
-                                    },
-                                  ),
-                                  Text(
-                                    'Normal',
-                                    style: Styles.textStyle14,
-                                  ),
-                                  Radio(
-                                    value: 'principal',
-                                    groupValue: _selectedTeacherRole,
-                                    onChanged: (String? value) {
-                                      setState(
-                                        () {
-                                          _selectedTeacherRole = value;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  Text(
-                                    'Principal',
-                                    style: Styles.textStyle14,
-                                  ),
-                                ],
+                            : RadioGroup<String>(
+                                groupValue: _selectedTeacherRole,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _selectedTeacherRole = value;
+                                  });
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Radio<String>(value: 'normal'),
+                                    Text('Normal', style: Styles.textStyle14),
+                                    const Radio<String>(value: 'principal'),
+                                    Text('Principal', style: Styles.textStyle14),
+                                  ],
+                                ),
                               ),
-                        const SizedBox(
-                          height: 39,
-                        ),
+                        const SizedBox(height: 39),
                         Container(
                           width: double.infinity,
                           height: 49,
@@ -349,8 +278,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                               borderRadius: BorderRadius.circular(47),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      Color(0xff1145FF).withValues(alpha: 0.3),
+                                  color: Color(0xff1145FF).withValues(alpha: 0.3),
                                   spreadRadius: 5,
                                   blurRadius: 7,
                                 )
@@ -376,6 +304,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                   );
 
                                   await supabase.from('users').insert({
+                                    'id': supabase.auth.currentUser!.id,
                                     'name': widget.name,
                                     'last_name': widget.lastName,
                                     'email': widget.email,
@@ -395,19 +324,11 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                     if (!context.mounted) return;
                                     GoRouter.of(context).pushReplacement(
                                         AppRouter.kNavigationBarAdmin);
-                                  } else if (_passwordController.text !=
-                                      _confirmPasswordController.text) {
-                                    if (!context.mounted) return;
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Center(
-                                              child: Text(
-                                                  'password do not match!'))),
-                                    );
                                   } else {
                                     return;
                                   }
                                 } catch (error) {
+                                  if (!context.mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content: Text(
@@ -417,6 +338,14 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                                     _isLoading = false;
                                   });
                                 }
+                              } else if (_passwordController.text !=
+                                  _confirmPasswordController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Center(
+                                          child:
+                                              Text('passwords do not match!'))),
+                                );
                               }
                             },
                             child: Text(
@@ -426,9 +355,7 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -471,15 +398,11 @@ class _SignUpViewBodyLastStepState extends State<SignUpViewBodyLastStep> {
         hintStyle: Styles.textStyle14,
         contentPadding: const EdgeInsets.only(left: 30),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xffE1DFEC),
-          ),
+          borderSide: const BorderSide(color: Color(0xffE1DFEC)),
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xffE1DFEC),
-          ),
+          borderSide: const BorderSide(color: Color(0xffE1DFEC)),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

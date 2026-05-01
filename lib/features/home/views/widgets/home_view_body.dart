@@ -22,7 +22,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   }
 
   Future<List<Map<String, dynamic>>> fetchUserContent() async {
-    final res = await supabase.from('announcement').select();
+    final res = await supabase
+        .from('announcement')
+        .select()
+        .order('created_at', ascending: false);
     return res;
   }
 
@@ -39,9 +42,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 child: const Center(child: CircularProgressIndicator()),
               );
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
+              return Center(child: Text('${snapshot.error}'));
             } else {
               final userData = snapshot.data as Map<String, dynamic>;
               final name = userData['name'];
@@ -66,9 +67,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
+                        const SizedBox(height: 30),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Align(
@@ -85,20 +84,17 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                         : NetworkImage(profileUrl),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
+                                const SizedBox(width: 8),
                                 Text(
                                   '$lastName $name',
-                                  style: const TextStyle(color: Colors.white),
+                                  style:
+                                      const TextStyle(color: Colors.white),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 22,
-                        ),
+                        const SizedBox(height: 22),
                         Container(
                           width: 280,
                           height: 280,
@@ -165,12 +161,11 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
                                   return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
+                                      child: CircularProgressIndicator());
                                 } else if (snapshot.hasError) {
                                   return Center(
-                                    child: Text('has error: ${snapshot.error}'),
-                                  );
+                                      child: Text(
+                                          'has error: ${snapshot.error}'));
                                 } else {
                                   final userContentData = snapshot.data!;
                                   return ListView.builder(
@@ -184,7 +179,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                           userContentData[index];
                                       final rawDate =
                                           announcement['created_at'];
-                                      final formattedDate = formatDate(rawDate);
+                                      final formattedDate =
+                                          formatDate(rawDate);
                                       return Card(
                                         color: Colors.white,
                                         margin: const EdgeInsets.symmetric(
@@ -240,9 +236,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                 }
                               }),
                         ),
-                        const SizedBox(
-                          height: 100,
-                        )
+                        const SizedBox(height: 100)
                       ],
                     ),
                   ),

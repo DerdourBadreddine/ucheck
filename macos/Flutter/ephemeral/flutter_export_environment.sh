@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=D:\coding\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\LENOVO\Desktop\Ucheck\ucheck"
+export "FLUTTER_ROOT=C:\Users\LENOVO\flutter"
+export "FLUTTER_APPLICATION_PATH=C:\Users\LENOVO\Desktop\badro 2025\Ucheck\ucheck"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

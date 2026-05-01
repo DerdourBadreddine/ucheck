@@ -35,25 +35,17 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
   }
 
   Future<List<Map<String, dynamic>>> fetchstudentListData() async {
-    return await supabase
-        .from('student_list')
-        .select()
-        .eq('uuid', supabase.auth.currentUser!.id);
+    final result = await supabase.from('student_lists').select();
+    return result;
   }
 
   Future<Map<String, dynamic>?> fetchExamData() async {
-    final response = await supabase
-        .from('calendarAppointment')
+    final result = await supabase
+        .from('calendarAppointments')
         .select()
         .eq('date', DateFormat('yyyy-MM-dd').format(DateTime.now()))
-        .maybeSingle()
         .limit(1);
-
-    if (response == null) {
-      return null;
-    } else {
-      return response;
-    }
+    return result.isNotEmpty ? result.first : null;
   }
 
   Future<void> pdf(BuildContext context) async {
@@ -94,19 +86,18 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                 ),
                 pw.Center(
                   child: pw.Column(children: [
-                    pw.SizedBox(
-                      height: 70,
-                    ),
+                    pw.SizedBox(height: 70),
                     pw.Container(
                       width: 260,
                       height: 25,
                       decoration: pw.BoxDecoration(
-                          border:
-                              pw.Border.all(width: 1, color: PdfColors.black),
+                          border: pw.Border.all(
+                              width: 1, color: PdfColors.black),
                           borderRadius: pw.BorderRadius.circular(10)),
                       child: pw.Padding(
                         padding: const pw.EdgeInsets.all(5),
-                        child: pw.Text(examData?['faculty'] ?? 'Faculty'),
+                        child:
+                            pw.Text(examData?['faculty'] ?? 'Faculty'),
                       ),
                     ),
                     pw.SizedBox(height: 10),
@@ -115,11 +106,13 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                       height: 25,
                       decoration: pw.BoxDecoration(
                         borderRadius: pw.BorderRadius.circular(10),
-                        border: pw.Border.all(width: 1, color: PdfColors.black),
+                        border: pw.Border.all(
+                            width: 1, color: PdfColors.black),
                       ),
                       child: pw.Padding(
                         padding: const pw.EdgeInsets.all(5),
-                        child: pw.Text(examData?['department'] ?? 'Department'),
+                        child: pw.Text(
+                            examData?['department'] ?? 'Department'),
                       ),
                     ),
                     pw.SizedBox(height: 10),
@@ -128,11 +121,13 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                       height: 25,
                       decoration: pw.BoxDecoration(
                         borderRadius: pw.BorderRadius.circular(10),
-                        border: pw.Border.all(width: 1, color: PdfColors.black),
+                        border: pw.Border.all(
+                            width: 1, color: PdfColors.black),
                       ),
                       child: pw.Padding(
                         padding: const pw.EdgeInsets.all(5),
-                        child: pw.Text(examData?['subject'] ?? 'Module'),
+                        child:
+                            pw.Text(examData?['subject'] ?? 'Module'),
                       ),
                     ),
                     pw.SizedBox(height: 10),
@@ -141,12 +136,14 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                       height: 25,
                       decoration: pw.BoxDecoration(
                         borderRadius: pw.BorderRadius.circular(10),
-                        border: pw.Border.all(width: 1, color: PdfColors.black),
+                        border: pw.Border.all(
+                            width: 1, color: PdfColors.black),
                       ),
                       child: pw.Padding(
                         padding: const pw.EdgeInsets.all(5),
-                        child: pw.Text(examData?['principal_teacher'] ??
-                            'Principal teacher'),
+                        child: pw.Text(
+                            examData?['principal_teacher'] ??
+                                'Principal teacher'),
                       ),
                     ),
                     pw.SizedBox(height: 20),
@@ -154,8 +151,8 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                         width: 384,
                         height: 600,
                         decoration: pw.BoxDecoration(
-                          border:
-                              pw.Border.all(width: 1, color: PdfColors.black),
+                          border: pw.Border.all(
+                              width: 1, color: PdfColors.black),
                         ),
                         child: pw.Column(
                           children: listStudentData
@@ -164,7 +161,8 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                                   children: [
                                     pw.Expanded(
                                       child: pw.Padding(
-                                        padding: const pw.EdgeInsets.all(8),
+                                        padding:
+                                            const pw.EdgeInsets.all(8),
                                         child: pw.Text(
                                           '${student['last_name']} ${student['name']}',
                                           style: listStyle,
@@ -172,7 +170,8 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                                       ),
                                     ),
                                     pw.Padding(
-                                      padding: const pw.EdgeInsets.all(08),
+                                      padding:
+                                          const pw.EdgeInsets.all(8),
                                       child: pw.Container(
                                         width: 89,
                                         height: 28,
@@ -186,7 +185,8 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                                           alignment: pw.Alignment.center,
                                           child: pw.Text('cheked in',
                                               style: listStyle.copyWith(
-                                                  color: PdfColors.white)),
+                                                  color:
+                                                      PdfColors.white)),
                                         ),
                                       ),
                                     ),
@@ -217,9 +217,7 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('PDF saved to: ${file.path}'),
-      ),
+      SnackBar(content: Text('PDF saved to: ${file.path}')),
     );
   }
 
@@ -228,16 +226,14 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-          image:
-              DecorationImage(image: AssetImage(AssetsData.imgbgStudentList))),
+          image: DecorationImage(
+              image: AssetImage(AssetsData.imgbgStudentList))),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 33),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 150,
-            ),
+            const SizedBox(height: 150),
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
@@ -268,14 +264,10 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                   return SizedBox(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.5,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: const Center(child: CircularProgressIndicator()),
                   );
                 } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('error: ${snapshot.error}'),
-                  );
+                  return Center(child: Text('error: ${snapshot.error}'));
                 }
                 final listStudentData = snapshot.data!;
                 return Expanded(
@@ -296,9 +288,7 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
                                     AssetImage(AssetsData.imgAvatar),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: Text(
                                 '${studentNames['last_name']} ${studentNames['name']}',

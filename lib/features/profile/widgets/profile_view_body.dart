@@ -16,14 +16,12 @@ class ProfileViewBody extends StatefulWidget {
 
 class _ProfileViewBodyState extends State<ProfileViewBody> {
   bool islogedOut = false;
-  String? profileImageUrl;
-  Future<Map<String, dynamic>> fetchUserData() async {
-    final session = supabase.auth.currentSession;
 
+  Future<Map<String, dynamic>> fetchUserData() async {
     final response = await supabase
         .from('users')
         .select()
-        .eq('id', session!.user.id)
+        .eq('id', supabase.auth.currentUser!.id)
         .single();
     return response;
   }
@@ -105,9 +103,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                             pickAndUploadImage();
                           },
                           child: const Icon(Icons.add_a_photo)),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
                           Text(
@@ -120,9 +116,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                 : '${userData['user_categorie']} teacher',
                             style: Styles.textStyle13,
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           Text(
                             userData['user_role'] == 'student'
                                 ? 'Student id'
@@ -133,27 +127,15 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                             userData['id_number'],
                             style: Styles.textStyle16,
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Email',
-                            style: Styles.textStyle13,
-                          ),
-                          Text(
-                            userData['email'],
-                            style: Styles.textStyle16,
-                          ),
+                          const SizedBox(height: 20),
+                          Text('Email', style: Styles.textStyle13),
+                          Text(userData['email'], style: Styles.textStyle16),
                         ],
                       ),
-                      const SizedBox(
-                        height: 70,
-                      ),
+                      const SizedBox(height: 70),
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () async {
                               await supabase.auth.signOut();

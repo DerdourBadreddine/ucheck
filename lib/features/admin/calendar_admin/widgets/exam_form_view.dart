@@ -265,7 +265,7 @@ class _ExamFormViewState extends State<ExamFormView> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 await supabase
-                                    .from('calendarAppointment')
+                                    .from('calendarAppointments')
                                     .insert({
                                   'faculty': facultyController.text,
                                   'department': departmentController.text,

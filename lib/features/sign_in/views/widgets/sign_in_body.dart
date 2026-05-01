@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ucheck/core/utils/app_router.dart';
 import 'package:ucheck/core/utils/assets.dart';
 import 'package:ucheck/core/utils/styles.dart';
@@ -25,7 +25,6 @@ class _SignInBodyState extends State<SignInBody> {
         .select('user_role')
         .eq('id', supabase.auth.currentUser!.id)
         .single();
-
     return userData;
   }
 
@@ -48,9 +47,7 @@ class _SignInBodyState extends State<SignInBody> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 325,
-                      ),
+                      SizedBox(height: 325),
                       Text(
                         "Welcome !",
                         style: TextStyle(
@@ -58,9 +55,7 @@ class _SignInBodyState extends State<SignInBody> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5),
                       Text(
                         "make your exams less frustrating",
                         style: TextStyle(
@@ -73,9 +68,7 @@ class _SignInBodyState extends State<SignInBody> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 55,
-              ),
+              const SizedBox(height: 55),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -84,14 +77,10 @@ class _SignInBodyState extends State<SignInBody> {
                     children: [
                       myCustomTextFormField(_emailController, 'Email',
                           TextInputType.emailAddress, false),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       myCustomTextFormField(_passwordController, 'Password',
                           TextInputType.text, true),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
@@ -103,9 +92,7 @@ class _SignInBodyState extends State<SignInBody> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: double.infinity,
                         height: 49,
@@ -121,7 +108,6 @@ class _SignInBodyState extends State<SignInBody> {
                               setState(() {
                                 _isLoading = true;
                               });
-
                               try {
                                 await supabase.auth.signInWithPassword(
                                   email: _emailController.text,
@@ -139,11 +125,20 @@ class _SignInBodyState extends State<SignInBody> {
                                 } else {
                                   return;
                                 }
+                              } on AuthException catch (error) {
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(error.message),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
                               } catch (error) {
+                                if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
-                                        'Login failed! Please check your credentials or your internet connexion.'),
+                                        'Login failed! Please check your credentials or your internet connection.'),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
@@ -161,9 +156,7 @@ class _SignInBodyState extends State<SignInBody> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
@@ -172,9 +165,7 @@ class _SignInBodyState extends State<SignInBody> {
                               'Not registred yet ?',
                               style: Styles.textStyle14,
                             ),
-                            const SizedBox(
-                              width: 5,
-                            ),
+                            const SizedBox(width: 5),
                             InkWell(
                               onTap: () {
                                 GoRouter.of(context)
@@ -189,9 +180,7 @@ class _SignInBodyState extends State<SignInBody> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 50,
-                      ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 ),
@@ -229,15 +218,11 @@ class _SignInBodyState extends State<SignInBody> {
         hintStyle: Styles.textStyle14,
         contentPadding: const EdgeInsets.only(left: 30),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xffE1DFEC),
-          ),
+          borderSide: const BorderSide(color: Color(0xffE1DFEC)),
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color(0xffE1DFEC),
-          ),
+          borderSide: const BorderSide(color: Color(0xffE1DFEC)),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

@@ -19,6 +19,14 @@ class StudentListViewBody extends StatefulWidget {
 }
 
 class _StudentListViewBodyState extends State<StudentListViewBody> {
+  late final Future<List<Map<String, dynamic>>> _studentListFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _studentListFuture = fetchstudentListData();
+  }
+
   Future<void> requestStoragePermission(BuildContext context) async {
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
     final status = deviceInfo.version.sdkInt > 32
@@ -258,7 +266,7 @@ class _StudentListViewBodyState extends State<StudentListViewBody> {
               style: Styles.textStyle20.copyWith(color: Colors.black),
             ),
             FutureBuilder(
-              future: fetchstudentListData(),
+              future: _studentListFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(

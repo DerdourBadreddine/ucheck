@@ -15,27 +15,29 @@ class MyCalendarAdminView extends StatefulWidget {
 
 class _MyCalendarAdminViewState extends State<MyCalendarAdminView> {
   String? _userCategorie;
+  late final Future<List<Map<String, dynamic>>> _appointmentFuture;
 
-  Future<List<Map<String, dynamic>>> fetchAppointmentData() async {
-    final result = await supabase.from('calendarAppointments').select();
-    return result;
+  @override
+  void initState() {
+    super.initState();
+    _appointmentFuture = _fetchAppointmentData();
+    _fetchUserData();
   }
 
-  Future<void> fetchUserData() async {
+  Future<List<Map<String, dynamic>>> _fetchAppointmentData() {
+    return supabase.from('calendarAppointments').select();
+  }
+
+  Future<void> _fetchUserData() async {
     final row = await supabase
         .from('users')
         .select('user_categorie')
         .eq('id', supabase.auth.currentUser!.id)
         .single();
+    if (!mounted) return;
     setState(() {
       _userCategorie = row['user_categorie'];
     });
-  }
-
-  @override
-  void initState() {
-    fetchUserData();
-    super.initState();
   }
 
   @override
@@ -47,7 +49,7 @@ class _MyCalendarAdminViewState extends State<MyCalendarAdminView> {
         elevation: 0,
       ),
       body: FutureBuilder(
-          future: fetchAppointmentData(),
+          future: _appointmentFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

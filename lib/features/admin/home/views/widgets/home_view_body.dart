@@ -21,14 +21,24 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
   Barcode? _barcode;
   bool isLoaded = false;
 
+  late Future<List<Map<String, dynamic>>> _contentFuture;
+
   final TextEditingController _announcementController = TextEditingController();
   final TextEditingController _announcementEditingController =
       TextEditingController();
 
   @override
   void initState() {
-    fetchUserData();
     super.initState();
+    fetchUserData();
+    _contentFuture = fetchUserContent();
+  }
+
+  void _refreshContent() {
+    if (!mounted) return;
+    setState(() {
+      _contentFuture = fetchUserContent();
+    });
   }
 
   Future<void> fetchUserData() async {
@@ -160,7 +170,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                       ),
                       LimitedBox(
                           child: FutureBuilder(
-                        future: fetchUserContent(),
+                        future: _contentFuture,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -258,8 +268,10 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                                                           userContentData[index]
                                                                               [
                                                                               'id']);
-                                                                  setState(
-                                                                      () {});
+                                                                  if (!mounted) {
+                                                                    return;
+                                                                  }
+                                                                  _refreshContent();
                                                                   if (!context
                                                                       .mounted) {
                                                                     return;
@@ -311,8 +323,10 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                                                           userContentData[index]
                                                                               [
                                                                               'id']);
-                                                                  setState(
-                                                                      () {});
+                                                                  if (!mounted) {
+                                                                    return;
+                                                                  }
+                                                                  _refreshContent();
                                                                   if (!context
                                                                       .mounted) {
                                                                     return;
@@ -436,6 +450,8 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                       'content': _announcementController.text,
                     });
                     if (!mounted) return;
+                    _announcementController.clear();
+                    _refreshContent();
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -474,9 +490,6 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                         ],
                       ),
                     );
-                    setState(() {
-                      _announcementController.clear();
-                    });
                   },
                   child: Text(
                     'Envoyer',

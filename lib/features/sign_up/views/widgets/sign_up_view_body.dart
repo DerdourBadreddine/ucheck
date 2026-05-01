@@ -179,13 +179,14 @@ class _SignUpViewbodyState extends State<SignUpViewbody> {
                           final String name = _nameController.text;
                           final String lastName = _lastNameController.text;
                           final String email = _emailController.text;
-                          GoRouter.of(context).pushNamed(
-                              AppRouter.kRegistrationLastStep,
-                              pathParameters: {
-                                'name': name,
-                                'lastName': lastName,
-                                'email': email,
-                              });
+                          GoRouter.of(context).push(
+                            AppRouter.kRegistrationLastStep,
+                            extra: <String, String?>{
+                              'name': name,
+                              'lastName': lastName,
+                              'email': email,
+                            },
+                          );
                         }
                       },
                       child: Text(

@@ -15,7 +15,10 @@ class NavigationBarView extends StatelessWidget {
     final navigationCubit = context.watch<NavigationCubit>();
     return Scaffold(
       extendBody: true,
-      body: (navigationCubit.state as NavigationInitial).currentPage,
+      body: IndexedStack(
+        index: (navigationCubit.state as NavigationInitial).currentIndex,
+        children: (navigationCubit.state as NavigationInitial).pages,
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 29, top: 0, right: 29, bottom: 29),
         child: Container(

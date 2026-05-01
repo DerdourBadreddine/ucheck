@@ -71,7 +71,8 @@ class _ExamFormViewState extends State<ExamFormView> {
     ).then((value) {
       if (value != null) {
         setState(() {
-          fromController.text = value.format(context);
+          fromController.text =
+              '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
         });
       }
     });
@@ -84,7 +85,8 @@ class _ExamFormViewState extends State<ExamFormView> {
     ).then((value) {
       if (value != null) {
         setState(() {
-          toController.text = value.format(context);
+          toController.text =
+              '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
         });
       }
     });

@@ -15,15 +15,20 @@ class ProfileViewBody extends StatefulWidget {
 }
 
 class _ProfileViewBodyState extends State<ProfileViewBody> {
-  bool islogedOut = false;
+  late Future<Map<String, dynamic>> _userDataFuture;
 
-  Future<Map<String, dynamic>> fetchUserData() async {
-    final response = await supabase
+  @override
+  void initState() {
+    super.initState();
+    _userDataFuture = _fetchUserData();
+  }
+
+  Future<Map<String, dynamic>> _fetchUserData() {
+    return supabase
         .from('users')
         .select()
         .eq('id', supabase.auth.currentUser!.id)
         .single();
-    return response;
   }
 
   Future<void> pickAndUploadImage() async {
@@ -46,15 +51,16 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     await supabase
         .from('users')
         .update({'profile_url': imageUrl}).eq('id', userId);
-    setState(() {});
+    if (!mounted) return;
+    setState(() {
+      _userDataFuture = _fetchUserData();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return islogedOut
-        ? const Center(child: CircularProgressIndicator())
-        : FutureBuilder(
-            future: fetchUserData(),
+    return FutureBuilder(
+            future: _userDataFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

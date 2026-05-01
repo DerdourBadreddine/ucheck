@@ -15,7 +15,10 @@ class NavigationBarAdminView extends StatelessWidget {
     final navigationCubit = context.watch<NavigationAdminCubit>();
     return Scaffold(
       extendBody: true,
-      body: (navigationCubit.state as NavigationAdminInitial).currentPage,
+      body: IndexedStack(
+        index: (navigationCubit.state as NavigationAdminInitial).currentIndex,
+        children: (navigationCubit.state as NavigationAdminInitial).pages,
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 29, top: 0, right: 29, bottom: 29),
         child: Container(

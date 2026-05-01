@@ -12,7 +12,15 @@ class MyCalendarView extends StatefulWidget {
 }
 
 class _MyCalendarViewState extends State<MyCalendarView> {
-  Future<List<Map<String, dynamic>>> fetchAppointmentData() async {
+  late final Future<List<Map<String, dynamic>>> _appointmentFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _appointmentFuture = _fetchAppointmentData();
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchAppointmentData() async {
     final userRow = await supabase
         .from('users')
         .select('user_categorie')
@@ -20,11 +28,10 @@ class _MyCalendarViewState extends State<MyCalendarView> {
         .single();
     final studentLevel = userRow['user_categorie'];
 
-    final result = await supabase
+    return supabase
         .from('calendarAppointments')
         .select()
         .eq('exam_level', studentLevel);
-    return result;
   }
 
   @override
@@ -36,7 +43,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
         elevation: 0,
       ),
       body: FutureBuilder(
-          future: fetchAppointmentData(),
+          future: _appointmentFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

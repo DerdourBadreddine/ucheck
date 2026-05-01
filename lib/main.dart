@@ -9,9 +9,9 @@ import 'package:ucheck/features/navigation_bar/view_model/cubit/navigation_cubit
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-      url: 'https://hlepvedspymbjldkcomq.supabase.co',
+      url: 'https://dvimneqqomzfhxmhvlkz.supabase.co',
       anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhsZXB2ZWRzcHltYmpsZGtjb21xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIyNzU0OTAsImV4cCI6MjAyNzg1MTQ5MH0.cuBginHS65YOnI-sWaWLtXhgKK_xXK3BQ7vRBqVaBJg');
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2aW1uZXFxb216Zmh4bWh2bGt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NDUyMTUsImV4cCI6MjA5MzIyMTIxNX0.xc6eeYB_X1PpaR5r-A-qQdTnVMjo0KLcnt2DgR1_gc8');
   runApp(const MyApp());
 }
 

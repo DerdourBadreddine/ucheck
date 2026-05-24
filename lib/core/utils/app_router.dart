@@ -1,36 +1,38 @@
 import 'package:go_router/go_router.dart';
+import 'package:ucheck/core/utils/auth_gate.dart';
 import 'package:ucheck/features/admin/calendar_admin/widgets/exam_form_view.dart';
 import 'package:ucheck/features/admin/navigation_bar_admin/views/navigation_bar_view.dart';
 import 'package:ucheck/features/navigation_bar/views/navigation_bar_view.dart';
-import 'package:ucheck/features/sign_in/views/sign_in.dart';
 import 'package:ucheck/features/sign_up/views/sign_up_view.dart';
 import 'package:ucheck/features/sign_up/views/widgets/sign_up_view_body_last_step.dart';
 
 abstract class AppRouter {
   static const kDefault = '/';
-  static const kSignIn = '/signIn';
   static const kRegistration = '/signUp';
   static const kRegistrationLastStep = '/signUpLastStep';
   static const kNavigationBar = '/NavigationBar';
   static const kNavigationBarAdmin = '/NavigationBarAdmin';
   static const kFormExam = '/formExamAdmin';
+
   static final router = GoRouter(routes: [
     GoRoute(
-      path: '/',
-      builder: (context, state) => const SignIn(),
+      path: kDefault,
+      builder: (context, state) => const AuthGate(),
     ),
     GoRoute(
       path: kRegistration,
       builder: (context, state) => const SignUpView(),
     ),
     GoRoute(
-      path: '$kRegistrationLastStep/:name/:lastName/:email',
-      name: kRegistrationLastStep,
-      builder: (context, state) => SignUpViewBodyLastStep(
-        name: state.pathParameters['name'],
-        lastName: state.pathParameters['lastName'],
-        email: state.pathParameters['email'],
-      ),
+      path: kRegistrationLastStep,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, String?>? ?? {};
+        return SignUpViewBodyLastStep(
+          name: extra['name'],
+          lastName: extra['lastName'],
+          email: extra['email'],
+        );
+      },
     ),
     GoRoute(
       path: kNavigationBar,

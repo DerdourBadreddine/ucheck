@@ -6,7 +6,7 @@ import 'package:ucheck/core/utils/styles.dart';
 import 'package:ucheck/main.dart';
 
 class HomeAdminViewBody extends StatefulWidget {
-  const HomeAdminViewBody({Key? key}) : super(key: key);
+  const HomeAdminViewBody({super.key});
 
   @override
   State<HomeAdminViewBody> createState() => _HomeViewBodyState();
@@ -21,14 +21,24 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
   Barcode? _barcode;
   bool isLoaded = false;
 
+  late Future<List<Map<String, dynamic>>> _contentFuture;
+
   final TextEditingController _announcementController = TextEditingController();
   final TextEditingController _announcementEditingController =
       TextEditingController();
 
   @override
   void initState() {
-    fetchUserData();
     super.initState();
+    fetchUserData();
+    _contentFuture = fetchUserContent();
+  }
+
+  void _refreshContent() {
+    if (!mounted) return;
+    setState(() {
+      _contentFuture = fetchUserContent();
+    });
   }
 
   Future<void> fetchUserData() async {
@@ -38,17 +48,20 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
         .eq('id', supabase.auth.currentUser!.id)
         .single();
     setState(() {
-      name = userData['name'] as String;
-      lastName = userData['last_name'] as String;
-      idNumber = userData['id_number'] as String;
-      profileUrl = userData['profile_url'];
-      userCategorie = userData['user_categorie'] as String;
+      name = userData['name'] as String?;
+      lastName = userData['last_name'] as String?;
+      idNumber = userData['id_number'] as String?;
+      profileUrl = userData['profile_url'] as String?;
+      userCategorie = userData['user_categorie'] as String?;
       isLoaded = true;
     });
   }
 
   Future<List<Map<String, dynamic>>> fetchUserContent() async {
-    final res = await supabase.from('announcement').select();
+    final res = await supabase
+        .from('announcement')
+        .select()
+        .order('created_at', ascending: false);
     return res;
   }
 
@@ -70,19 +83,15 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                           end: Alignment.bottomCenter,
                           colors: [
                             const Color(0xff3126B4),
-                            const Color(0xff008BF2).withOpacity(0.6),
+                            Color(0xff008BF2).withValues(alpha: 0.6),
                           ],
                         ),
                       ),
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          const SizedBox(height: 40),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Row(
@@ -98,9 +107,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                           : NetworkImage(profileUrl!),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
+                                  const SizedBox(width: 8),
                                   Text(
                                     '$lastName $name',
                                     style: Styles.textStyle14.copyWith(
@@ -149,9 +156,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       userCategorie == 'principal'
                           ? myAnnouncementUi()
                           : const SizedBox(),
@@ -165,17 +170,14 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                       ),
                       LimitedBox(
                           child: FutureBuilder(
-                        future: fetchUserContent(),
+                        future: _contentFuture,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                                child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
-                            return Center(
-                              child: Text('${snapshot.error}'),
-                            );
+                            return Center(child: Text('${snapshot.error}'));
                           } else {
                             final userContentData = snapshot.data!;
                             return ListView.builder(
@@ -224,124 +226,128 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                                           ['content'];
                                                   showDialog(
                                                       context: context,
-                                                      builder:
-                                                          (context) =>
-                                                              AlertDialog(
-                                                                title: Text(
-                                                                  'Modification',
-                                                                  style: Styles
-                                                                      .textStyle20
-                                                                      .copyWith(
-                                                                          color:
-                                                                              Colors.black),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                                content:
-                                                                    TextField(
-                                                                  maxLines: 8,
-                                                                  autofocus:
-                                                                      true,
-                                                                  controller:
-                                                                      _announcementEditingController,
-                                                                ),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            context),
-                                                                    child: const Text(
-                                                                        'Cancel'),
-                                                                  ),
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      await supabase
-                                                                          .from(
-                                                                              'announcement')
-                                                                          .update({
-                                                                        'content':
-                                                                            _announcementEditingController.text
-                                                                      }).eq('id',
-                                                                              userContentData[index]['id']);
-                                                                      setState(
-                                                                          () {});
-                                                                      if (!context
-                                                                          .mounted) {
-                                                                        return;
-                                                                      }
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                    child: const Text(
-                                                                        'Confirm'),
-                                                                  ),
-                                                                ],
-                                                              ));
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                            title: Text(
+                                                              'Modification',
+                                                              style: Styles
+                                                                  .textStyle20
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .black),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            content: TextField(
+                                                              maxLines: 8,
+                                                              autofocus: true,
+                                                              controller:
+                                                                  _announcementEditingController,
+                                                            ),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        context),
+                                                                child: const Text(
+                                                                    'Cancel'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await supabase
+                                                                      .from(
+                                                                          'announcement')
+                                                                      .update({
+                                                                    'content':
+                                                                        _announcementEditingController
+                                                                            .text
+                                                                  }).eq(
+                                                                          'id',
+                                                                          userContentData[index]
+                                                                              [
+                                                                              'id']);
+                                                                  if (!mounted) {
+                                                                    return;
+                                                                  }
+                                                                  _refreshContent();
+                                                                  if (!context
+                                                                      .mounted) {
+                                                                    return;
+                                                                  }
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: const Text(
+                                                                    'Confirm'),
+                                                              ),
+                                                            ],
+                                                          ));
                                                 } else if (value == 2) {
                                                   showDialog(
                                                       context: context,
-                                                      builder:
-                                                          (context) =>
-                                                              AlertDialog(
-                                                                title: Text(
-                                                                  'confirmation',
-                                                                  style: Styles
-                                                                      .textStyle20
-                                                                      .copyWith(
-                                                                          color:
-                                                                              Colors.black),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                                content:
-                                                                    const Text(
-                                                                  'Do you really want to delete this announcement?',
-                                                                ),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            context),
-                                                                    child: const Text(
-                                                                        'Cancel'),
-                                                                  ),
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      await supabase
-                                                                          .from(
-                                                                              'announcement')
-                                                                          .delete()
-                                                                          .eq('id',
-                                                                              userContentData[index]['id']);
-                                                                      setState(
-                                                                          () {});
-                                                                      if (!context
-                                                                          .mounted) {
-                                                                        return;
-                                                                      }
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                    child: const Text(
-                                                                        'Confirm'),
-                                                                  ),
-                                                                ],
-                                                              ));
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                            title: Text(
+                                                              'confirmation',
+                                                              style: Styles
+                                                                  .textStyle20
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .black),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            content: const Text(
+                                                              'Do you really want to delete this announcement?',
+                                                            ),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        context),
+                                                                child: const Text(
+                                                                    'Cancel'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await supabase
+                                                                      .from(
+                                                                          'announcement')
+                                                                      .delete()
+                                                                      .eq(
+                                                                          'id',
+                                                                          userContentData[index]
+                                                                              [
+                                                                              'id']);
+                                                                  if (!mounted) {
+                                                                    return;
+                                                                  }
+                                                                  _refreshContent();
+                                                                  if (!context
+                                                                      .mounted) {
+                                                                    return;
+                                                                  }
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: const Text(
+                                                                    'Confirm'),
+                                                              ),
+                                                            ],
+                                                          ));
                                                 }
                                               },
                                               itemBuilder: (context) => [
                                                 const PopupMenuItem(
-                                                  value: 1,
-                                                  child: Text('Modify'),
-                                                ),
+                                                    value: 1,
+                                                    child: Text('Modify')),
                                                 const PopupMenuItem(
-                                                  value: 2,
-                                                  child: Text('Delete'),
-                                                ),
+                                                    value: 2,
+                                                    child: Text('Delete')),
                                               ],
                                             )
                                           ],
@@ -380,9 +386,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                           }
                         },
                       )),
-                      const SizedBox(
-                        height: 100,
-                      )
+                      const SizedBox(height: 100)
                     ],
                   ),
                 ),
@@ -391,9 +395,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
           : SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: const Center(child: CircularProgressIndicator()),
             ),
     );
   }
@@ -414,15 +416,11 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.only(left: 20, top: 10),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.white,
-                ),
+                borderSide: const BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.white,
-                ),
+                borderSide: const BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -441,16 +439,19 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: const Color(0xff4DADF5).withOpacity(0.19),
+                    backgroundColor:
+                        Color(0xff4DADF5).withValues(alpha: 0.19),
                   ),
                   onPressed: () async {
                     if (_announcementController.text.isEmpty) return;
                     await supabase.from('announcement').insert({
                       'last_name': lastName,
                       'name': name,
-                      'content': _announcementController.text
+                      'content': _announcementController.text,
                     });
                     if (!mounted) return;
+                    _announcementController.clear();
+                    _refreshContent();
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -458,10 +459,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        icon: const Icon(
-                          Icons.check_circle,
-                          size: 30,
-                        ),
+                        icon: const Icon(Icons.check_circle, size: 30),
                         iconColor: const Color(0xff01B836),
                         content: Text(
                           'Announcement added successfully!',
@@ -492,10 +490,6 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                         ],
                       ),
                     );
-
-                    setState(() {
-                      _announcementController.clear();
-                    });
                   },
                   child: Text(
                     'Envoyer',
@@ -519,7 +513,7 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
       height: 280,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: Colors.white.withOpacity(0.6),
+        color: Colors.white.withValues(alpha: 0.6),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -529,7 +523,6 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
             fit: BoxFit.cover,
             controller: MobileScannerController(
               detectionSpeed: DetectionSpeed.noDuplicates,
-              // returnImage: true,
             ),
             onDetect: (barcodes) async {
               if (mounted) {
@@ -556,7 +549,6 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                         onPressed: () async {
                           if (_barcode != null) {
                             final String barcodeData = _barcode!.rawValue!;
-
                             final List<String> raws = barcodeData.split('\n');
 
                             String extractedName = '';
@@ -579,15 +571,15 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                     raw.substring(raw.indexOf(':') + 1).trim();
                               }
                             }
-                            final hasResult = await supabase
-                                .from('student_list')
-                                .select('name, last_name')
+
+                            final existing = await supabase
+                                .from('student_lists')
+                                .select()
                                 .eq('last_name', extractedLastName)
-                                .maybeSingle()
+                                .eq('name', extractedName)
                                 .limit(1);
 
-                            if (hasResult?['name'] == extractedName &&
-                                hasResult?['last_name'] == extractedLastName) {
+                            if (existing.isNotEmpty) {
                               if (!context.mounted) return;
                               Navigator.of(context).pop();
                               showDialog(
@@ -598,9 +590,8 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   icon: const Icon(
-                                    Icons.dangerous_rounded,
-                                    size: 30,
-                                  ),
+                                      Icons.dangerous_rounded,
+                                      size: 30),
                                   iconColor: const Color(0xffFF0000),
                                   content: SizedBox(
                                     width: 100,
@@ -646,10 +637,10 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                 ),
                               );
                             } else {
-                              await supabase.from('student_list').insert({
+                              await supabase.from('student_lists').insert({
                                 'name': extractedName,
                                 'last_name': extractedLastName,
-                                'id_number': extractedIdNumber
+                                'id_number': extractedIdNumber,
                               });
                               if (!context.mounted) return;
                               Navigator.of(context).pop();
@@ -660,10 +651,8 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  icon: const Icon(
-                                    Icons.check_circle,
-                                    size: 30,
-                                  ),
+                                  icon: const Icon(Icons.check_circle,
+                                      size: 30),
                                   iconColor: const Color(0xff01B836),
                                   content: SizedBox(
                                     width: 100,
@@ -681,13 +670,12 @@ class _HomeViewBodyState extends State<HomeAdminViewBody> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
+                                        const SizedBox(height: 10),
                                         Text(
                                           extractedIdNumber,
                                           style: Styles.textStyle12.copyWith(
-                                              color: const Color(0xff212121)),
+                                              color:
+                                                  const Color(0xff212121)),
                                         )
                                       ],
                                     ),

@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Supabase__execute_sql",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\LENOVO\\\\Desktop\\\\badro 2025\\\\Ucheck\\\\ucheck\" -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\LENOVO\\\\Desktop\\\\badro 2025\\\\Ucheck\\\\ucheck\\\\android\" -Recurse | where {$_.Extension -in '.gradle','.xml','.properties'} | Select-Object Name, DirectoryName)",
+      "mcp__claude_ai_Supabase__get_project_url",
+      "mcp__claude_ai_Supabase__get_publishable_keys",
+      "Bash(flutter pub *)",
+      "Bash(flutter analyze *)",
+      "Bash(flutter --version)",
+      "Bash(flutter devices *)",
+      "Bash(flutter build *)",
+      "Bash(flutter run *)",
+      "mcp__claude_ai_Supabase__list_tables",
+      "Bash(Get-Content \"C:/Users/LENOVO/Desktop/badro 2025/Ucheck/ucheck/README.md\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -First 5)",
+      "Bash(start \"\" \"build\\\\web\\\\index.html\")",
+      "Bash(powershell.exe -Command \"Start-Process 'flutter' -ArgumentList 'run','-d','chrome' -WorkingDirectory 'C:\\\\Users\\\\LENOVO\\\\Desktop\\\\badro 2025\\\\Ucheck\\\\ucheck' -WindowStyle Normal\")",
+      "Bash(Get-Content \"C:\\\\Users\\\\LENOVO\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-LENOVO-Desktop-badro-2025-Ucheck-ucheck\\\\e71aa29b-8c34-4e24-b23c-50acde920790\\\\tasks\\\\bd41oym0a.output\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -Last 20)",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__apply_migration",
+      "mcp__claude_ai_Supabase__list_projects",
+      "mcp__claude_ai_Supabase__get_project"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

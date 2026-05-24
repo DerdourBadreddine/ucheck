@@ -15,7 +15,10 @@ class NavigationBarView extends StatelessWidget {
     final navigationCubit = context.watch<NavigationCubit>();
     return Scaffold(
       extendBody: true,
-      body: (navigationCubit.state as NavigationInitial).currentPage,
+      body: IndexedStack(
+        index: (navigationCubit.state as NavigationInitial).currentIndex,
+        children: (navigationCubit.state as NavigationInitial).pages,
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 29, top: 0, right: 29, bottom: 29),
         child: Container(
@@ -24,7 +27,7 @@ class NavigationBarView extends StatelessWidget {
             BoxShadow(
               // spreadRadius: -5,
               blurRadius: 10,
-              color: Colors.black.withOpacity(0.07),
+              color: Colors.black.withValues(alpha: 0.07),
               offset: const Offset(0, 12.52),
             ),
           ]),
@@ -51,7 +54,7 @@ class NavigationBarView extends StatelessWidget {
                 },
                 unselectedItemColor: Colors.white,
                 selectedItemColor: Colors.white,
-                backgroundColor: const Color(0xff0738CC).withOpacity(0.7),
+                backgroundColor: Color(0xff0738CC).withValues(alpha: 0.7),
                 type: BottomNavigationBarType.fixed,
                 showUnselectedLabels: false,
                 showSelectedLabels: true,

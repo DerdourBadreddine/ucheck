@@ -12,17 +12,26 @@ class MyCalendarView extends StatefulWidget {
 }
 
 class _MyCalendarViewState extends State<MyCalendarView> {
-  Future<List<Map<String, dynamic>>> fetchAppointmentData() async {
-    final studentLevel = await supabase
+  late final Future<List<Map<String, dynamic>>> _appointmentFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _appointmentFuture = _fetchAppointmentData();
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchAppointmentData() async {
+    final userRow = await supabase
         .from('users')
         .select('user_categorie')
         .eq('id', supabase.auth.currentUser!.id)
         .single();
-    final res = await supabase
-        .from('calendarAppointment')
+    final studentLevel = userRow['user_categorie'];
+
+    return supabase
+        .from('calendarAppointments')
         .select()
-        .eq('exam_level', studentLevel['user_categorie']);
-    return res;
+        .eq('exam_level', studentLevel);
   }
 
   @override
@@ -34,16 +43,12 @@ class _MyCalendarViewState extends State<MyCalendarView> {
         elevation: 0,
       ),
       body: FutureBuilder(
-          future: fetchAppointmentData(),
+          future: _appointmentFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text('has error:${snapshot.hasError}'),
-              );
+              return Center(child: Text('has error:${snapshot.error}'));
             } else {
               final appointmentData = snapshot.data!;
               final List<Meeting> collection = [];
@@ -62,9 +67,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                 view: CalendarView.week,
                 headerHeight: 0,
                 firstDayOfWeek: 1,
-                // initialSelectedDate: DateTime.now(),
-                // initialDisplayDate: DateTime.now(),
-                // cellBorderColor: Colors.transparent,
                 cellEndPadding: 0,
                 viewHeaderHeight: 80,
                 todayHighlightColor: Colors.black,
@@ -102,29 +104,15 @@ class MeetingDataSource extends CalendarDataSource {
   }
 
   @override
-  DateTime getStartTime(int index) {
-    return appointments![index].from;
-  }
-
+  DateTime getStartTime(int index) => appointments![index].from;
   @override
-  DateTime getEndTime(int index) {
-    return appointments![index].to;
-  }
-
+  DateTime getEndTime(int index) => appointments![index].to;
   @override
-  String getSubject(int index) {
-    return appointments![index].eventName;
-  }
-
+  String getSubject(int index) => appointments![index].eventName;
   @override
-  Color getColor(int index) {
-    return appointments![index].background;
-  }
-
+  Color getColor(int index) => appointments![index].background;
   @override
-  bool isAllDay(int index) {
-    return appointments![index].isAllDay;
-  }
+  bool isAllDay(int index) => appointments![index].isAllDay;
 }
 
 class Meeting {
@@ -155,10 +143,8 @@ Widget appointmentBuilder(BuildContext context,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  DateFormat('hh:mm').format(appointment.from),
-                  style: Styles.textStyle12,
-                ),
+                child: Text(DateFormat('HH:mm').format(appointment.from),
+                    style: Styles.textStyle12),
               ),
             ),
             const Spacer(),
@@ -167,9 +153,7 @@ Widget appointmentBuilder(BuildContext context,
               child: Text(
                 appointment.eventName,
                 textAlign: TextAlign.center,
-                style: Styles.textStyle12.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Styles.textStyle12.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             const Spacer(),
@@ -177,10 +161,8 @@ Widget appointmentBuilder(BuildContext context,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: Text(
-                  DateFormat('hh:mm').format(appointment.to),
-                  style: Styles.textStyle12,
-                ),
+                child: Text(DateFormat('HH:mm').format(appointment.to),
+                    style: Styles.textStyle12),
               ),
             )
           ],

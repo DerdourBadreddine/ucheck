@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "407629651703",
+    "project_id": "ucheck-282bf",
+    "storage_bucket": "ucheck-282bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407629651703:android:f2b82aef733604431bfdf2",
+        "android_client_info": {
+          "package_name": "badrp.ucheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6VfcV6gCaSdnHu2AYCKOtxlat8Wu1Q4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
